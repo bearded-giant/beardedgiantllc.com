@@ -1,11 +1,15 @@
 {
-  "name": "bgllc-com",
+  "name": "bearded-giant-sites",
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev:llc": "vite --config sites/llc/vite.config.js",
+    "dev:bbq": "vite --config sites/bbq/vite.config.js",
+    "dev:ai": "vite --config sites/ai/vite.config.js",
+    "build:llc": "vite build --config sites/llc/vite.config.js",
+    "build:bbq": "vite build --config sites/bbq/vite.config.js",
+    "build:ai": "vite build --config sites/ai/vite.config.js",
+    "build:all": "npm run build:llc && npm run build:bbq && npm run build:ai"
   },
   "devDependencies": {
     "vite": "^6.2.0"

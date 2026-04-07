@@ -69,10 +69,14 @@ resource "google_compute_managed_ssl_certificate" "site" {
   for_each   = var.sites
   depends_on = [time_sleep.api_propagation]
 
-  name = "cert-${each.key}"
+  name = "cert-${each.key}-v2"
 
   managed {
-    domains = [each.value.domain]
+    domains = [each.value.domain, "www.${each.value.domain}"]
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 

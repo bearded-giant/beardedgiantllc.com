@@ -147,6 +147,16 @@ body {
   letter-spacing: 0.04em;
 }
 
+.photo-credit a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.photo-credit a:hover {
+  color: var(--accent-bright);
+}
+
 /* connect */
 .connect {
   padding: 5rem 2rem;

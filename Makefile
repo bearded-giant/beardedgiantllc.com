@@ -27,12 +27,15 @@ build-all: build-llc build-bbq build-ai
 # deploy to gcp buckets
 deploy-llc: build-llc
 	gsutil -m rsync -r -d sites/llc/dist gs://beardedgiantllc.com
+	gcloud compute url-maps invalidate-cdn-cache urlmap-llc --path "/*"
 
 deploy-bbq: build-bbq
 	gsutil -m rsync -r -d sites/bbq/dist gs://beardedgiantbbq.com
+	gcloud compute url-maps invalidate-cdn-cache urlmap-bbq --path "/*"
 
 deploy-ai: build-ai
 	gsutil -m rsync -r -d sites/ai/dist gs://beardedgiant.ai
+	gcloud compute url-maps invalidate-cdn-cache urlmap-ai --path "/*"
 
 deploy-all: deploy-llc deploy-bbq deploy-ai
 

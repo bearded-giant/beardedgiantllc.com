@@ -59,7 +59,7 @@ Root directory and install command stay at Vercel's defaults (repo root, `npm in
 
 ## DNS
 
-DNS lives at GoDaddy. Each apex domain has an A record and each `www` host has a CNAME pointing at Vercel; the exact values are on each domain's page in the Vercel project settings. `www` redirects to the apex domain.
+DNS lives at GoDaddy. Each apex domain has A records pointing at Vercel (the exact values are on each domain's page in the Vercel project settings), and each `www` host is a CNAME to its apex. Vercel redirects `www` to the apex domain.
 
 Mail runs through ProtonMail, so leave the MX records and the SPF and verification TXT records alone when you touch DNS.
 

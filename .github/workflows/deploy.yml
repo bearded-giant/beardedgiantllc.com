@@ -1,0 +1,33 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  vercel:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - site: llc
+            project: prj_CTP9CPwFLonMdUZpiXcMGAJe3no6
+          - site: bbq
+            project: prj_1VJRoUEicpizSjX2bu6rguI8maYb
+          - site: ai
+            project: prj_4dLmku4XUNqBKPf2ch9qfZuMI4lA
+    # a pending run replaces an older queued one, so an older build never lands last
+    concurrency:
+      group: deploy-${{ matrix.site }}
+      cancel-in-progress: false
+    env:
+      # the vercel cli reads these in place of a .vercel/project.json link
+      VERCEL_ORG_ID: team_w349aMYULqjwpy7WbMbf9OS1
+      VERCEL_PROJECT_ID: ${{ matrix.project }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+      - run: npm i -g vercel@59
+      - run: vercel deploy --prod --yes --token "$VERCEL_TOKEN"

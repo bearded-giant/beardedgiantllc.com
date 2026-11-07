@@ -47,7 +47,7 @@ make build-all          # all three
 
 ## Deploy
 
-Push to `main` and you're done. Vercel's GitHub integration builds all three projects from the repo root, and each project's build settings pick its site:
+Merge to `main` and you're done. The `deploy` GitHub Actions workflow (`.github/workflows/deploy.yml`) runs `vercel deploy --prod` once per project, and Vercel builds each site from the repo root with that project's build settings:
 
 | Project | Build command | Output directory |
 |---------|---------------|------------------|
@@ -55,7 +55,9 @@ Push to `main` and you're done. Vercel's GitHub integration builds all three pro
 | `beardedgiantbbq` | `npm run build:bbq` | `sites/bbq/dist` |
 | `beardedgiant-ai` | `npm run build:ai` | `sites/ai/dist` |
 
-Root directory and install command stay at Vercel's defaults (repo root, `npm install`). Pull requests get a preview deployment per project.
+Root directory and install command stay at Vercel's defaults (repo root, `npm install`). Vercel's own git deploys are switched off for `main` in `vercel.json`, so each merge deploys exactly once; pull requests still get a Vercel preview deployment per project.
+
+The workflow needs one repo secret, `VERCEL_TOKEN`: a Vercel token scoped to the team that owns the three projects. To redeploy without a new commit, run the `deploy` workflow by hand from the Actions tab.
 
 ## DNS
 

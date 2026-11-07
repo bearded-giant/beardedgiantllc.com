@@ -1,6 +1,6 @@
 SITES = llc bbq ai
 
-.PHONY: dev-llc dev-bbq dev-ai build-llc build-bbq build-ai build-all deploy-llc deploy-bbq deploy-ai deploy-all clean
+.PHONY: dev-llc dev-bbq dev-ai build-llc build-bbq build-ai build-all clean
 
 # dev servers
 dev-llc:
@@ -23,21 +23,6 @@ build-ai:
 	npx vite build --config sites/ai/vite.config.js
 
 build-all: build-llc build-bbq build-ai
-
-# deploy to gcp buckets
-deploy-llc: build-llc
-	gsutil -m rsync -r -d sites/llc/dist gs://beardedgiantllc.com
-	gcloud compute url-maps invalidate-cdn-cache urlmap-llc --path "/*"
-
-deploy-bbq: build-bbq
-	gsutil -m rsync -r -d sites/bbq/dist gs://beardedgiantbbq.com
-	gcloud compute url-maps invalidate-cdn-cache urlmap-bbq --path "/*"
-
-deploy-ai: build-ai
-	gsutil -m rsync -r -d sites/ai/dist gs://beardedgiant.ai
-	gcloud compute url-maps invalidate-cdn-cache urlmap-ai --path "/*"
-
-deploy-all: deploy-llc deploy-bbq deploy-ai
 
 # clean
 clean:
